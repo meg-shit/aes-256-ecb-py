@@ -1,0 +1,24 @@
+name: unittest
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  watch:
+    types: started
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: init Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    - name: test
+      run: |
+        pip install -r requirements.txt
+        python -m unittest test.test
