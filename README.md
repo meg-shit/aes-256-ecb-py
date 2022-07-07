@@ -14,5 +14,5 @@ ecb = ECB(key)
 encrypt_str = ecb.encrypt(src)
 
 decrypt_str = ecb.decrypt(encrypt_str)
-assert encrypt_str == decrypt_str
+assert src == decrypt_str
 ```
