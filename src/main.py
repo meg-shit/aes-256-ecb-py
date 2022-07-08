@@ -21,7 +21,7 @@ class ECB(object):
         """
         src = src if isinstance(src, bytes) else src.encode("utf-8")
         length = 16 - (len(src) % 16)
-        src += b'\x10' * length
+        src += bytes([length]) * length
         data = self.cipher.encrypt(src)
         return base64.b64encode(data).decode('utf-8')
 
@@ -31,4 +31,5 @@ class ECB(object):
         :param src: base64 encoded string
         :return: decode string
         """
-        return self.cipher.decrypt(base64.b64decode(src)).strip(b'\x10').decode("utf-8")
+        unpad = lambda s: s[:-ord(s[len(s) - 1:])]
+        return unpad(self.cipher.decrypt(base64.b64decode(src))).decode("utf-8")
